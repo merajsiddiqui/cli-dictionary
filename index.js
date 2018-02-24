@@ -1,14 +1,80 @@
 #!/usr/bin/env node
 const config = require("./config/config.json");
 const Wordnick = require("./lib/wordnick");
-
+const printer = require("./lib/printer");
+const chalk = require("chalk");
 /**
  * Dictionary object to call methods on dictiionary
  * @type {wordnick}
  */
-const dictionary = new Wordnick(config.wordnick);
 
-dictionary.wordOfTheDay((response)=>{
-	console.log(response);
-});
+const commandProcessor = (commands) => {
+	const dict = new Wordnick(config.wordnick);
+	const print = new printer(dict);
+	let accepeted_comommands = [
+		"syn",
+		"ant",
+		"def",
+		"ex",
+		"play",
+		"dict"
+	];
+	if(commands.length==4){
+		let command = commands[2];
+		let word = commands[3];
+		if(accepeted_comommands.indexOf(command) ==-1 ){
+			console.log(chalk.red("Invalid command Provided"));
+			console.log(chalk.yellow("Use : dict --help to get details"));
+			process.exit(2);
+		}else{
+			if(command=="syn"){
+				console.log(chalk.grey("Entered word"),":", chalk.white(word));
+				print.synonyms(word,true);
+			}
+			else if(command == "ant"){
+				console.log(chalk.grey("Entered word"),":", chalk.white(word));
+				print.antonyms(word,true);
+			}
+			else if(command == "def"){
+				console.log(chalk.grey("Entered word"),":", chalk.white(word));
+				print.definition(word,true);
+			}
+			else if(command == "dict"){
+				console.log(chalk.grey("Entered word"),":", chalk.white(word));
+				print.definition(word,false);
+				print.synonyms(word, false);
+				print.antonyms(word,false);
+			}
+		}
+	}
+	else if(commands.length==3){
+		let arg = commands[2];
+		if(arg == "play"){
+			console.log("We are still working on game");
+			process.exit();
+		}
+		else{
+			console.log(chalk.grey("Entered word"),":", chalk.white(arg));
+			print.definition(arg,false);
+			print.synonyms(arg, false);
+			print.antonyms(arg,false);
+		}
 
+	}
+	else if(commands.length==2){
+		dict.wordOfTheDay((response)=>{
+			let wordOfTheDay = response.word;
+			console.log(chalk.yellow("Word of the day"), chalk.white(wordOfTheDay));
+			print.synonyms(wordOfTheDay);
+			print.antonyms(wordOfTheDay);
+			console.log(chalk.green("Usage example for the word of the day"));
+			for(let i = 0; i < response.usage_examples.length;i++){
+				console.log(chalk.yellow(i+1 +":" +response.usage_examples[i]+"\n"));
+			}
+			print.definition(wordOfTheDay);
+		});
+	}
+}
+
+
+commandProcessor(process.argv);
