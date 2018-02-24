@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/merajsiddiqui/cli-dictionary#readme",
   "dependencies": {
-    "chalk": "^2.3.1"
+    "chalk": "^2.3.1",
+    "request": "^2.83.0"
   }
 }
