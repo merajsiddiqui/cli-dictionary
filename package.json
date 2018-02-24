@@ -1,0 +1,28 @@
+{
+  "name": "cli-dictionary",
+  "version": "1.0.0",
+  "description": "CLI dictionary tool to play with words  and learn",
+  "main": "index.js",
+  "bin": {
+    "dict": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merajsiddiqui/cli-dictionary.git"
+  },
+  "keywords": [
+    "cli-dictionary"
+  ],
+  "author": "Meraj Ahmad Siddiqui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/merajsiddiqui/cli-dictionary/issues"
+  },
+  "homepage": "https://github.com/merajsiddiqui/cli-dictionary#readme",
+  "dependencies": {
+    "chalk": "^2.3.1"
+  }
+}
